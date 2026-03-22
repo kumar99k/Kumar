@@ -155,3 +155,75 @@
             observer.observe(el);
         });
 
+// Carousel Functions
+function changeSlide(direction, carouselId) {
+    event.stopPropagation();
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const dots = carousel.querySelectorAll('.dot');
+    
+    let currentIndex = 0;
+    slides.forEach((slide, index) => {
+        if (slide.classList.contains('active')) {
+            currentIndex = index;
+        }
+    });
+    
+    slides[currentIndex].classList.remove('active');
+    dots[currentIndex].classList.remove('active');
+    
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = slides.length - 1;
+    if (newIndex >= slides.length) newIndex = 0;
+    
+    slides[newIndex].classList.add('active');
+    dots[newIndex].classList.add('active');
+}
+
+function goToSlide(index, carouselId) {
+    event.stopPropagation();
+    const carousel = document.getElementById(carouselId);
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const dots = carousel.querySelectorAll('.dot');
+    
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+}
+
+// Auto carousel functionality
+function startAutoCarousel(carouselId, interval = 3000) {
+    const carousel = document.getElementById(carouselId);
+    if (!carousel) return;
+    
+    let autoInterval = setInterval(() => {
+        // Check if carousel is still visible in viewport
+        const rect = carousel.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        
+        if (isVisible) {
+            changeSlide(1, carouselId);
+        }
+    }, interval);
+    
+    // Store interval on carousel element to clear if needed
+    carousel.autoInterval = autoInterval;
+    
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(carousel.autoInterval);
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+        carousel.autoInterval = setInterval(() => {
+            changeSlide(1, carouselId);
+        }, interval);
+    });
+}
+
+// Start auto carousel for each carousel when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    startAutoCarousel('carousel-1', 3000);
+});

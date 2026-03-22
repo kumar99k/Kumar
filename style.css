@@ -1161,3 +1161,162 @@
             }
             .contact-icon { width: auto; }
         }
+
+
+/* Carousel Styles */
+.media-carousel {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+
+
+/* Carousel Navigation Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all 0.3s;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.prev-btn {
+    left: 10px;
+}
+
+.next-btn {
+    right: 10px;
+}
+
+/* Carousel Dots */
+.carousel-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.2);
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.dot:hover {
+    background: var(--neon-cyan);
+}
+
+/* Update card-indicator to be a proper link */
+.card-indicator {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: var(--bg-elevated);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 20;
+    transition: all 0.3s;
+    border: 1px solid var(--border-medium);
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+.card-indicator:hover {
+    background: var(--gradient-1);
+    transform: scale(1.1) rotate(360deg);
+    color: white;
+}
+
+.card-indicator svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Prevent card click when clicking carousel buttons or dots */
+.carousel-btn,
+.dot {
+    z-index: 30;
+}
+
+/* Neon border for carousel on hover */
+.media-carousel:hover {
+    box-shadow: 0 0 20px var(--neon-cyan);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .carousel-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+}
